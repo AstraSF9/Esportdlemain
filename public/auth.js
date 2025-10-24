@@ -1,6 +1,15 @@
 // public/auth.js
 const $ = (sel) => document.querySelector(sel);
+
+/*
 const api = (path) => `http://localhost:3000${path}`;
+*/
+
+// Usa same-origin por defecto; si algún día hosteás el front aparte,
+// podés definir window.API_URL en un <script> para apuntar al backend.
+const API_BASE = (window.API_URL || "").replace(/\/+$/, "");
+const api = (path) => `${API_BASE}${path}`;
+
 
 /* ==============  i18n (ES/EN)  ============== */
 const I18N = {
@@ -457,7 +466,10 @@ window.openAuthModal = openModal;
 window.isLoggedIn    = () => !!localStorage.getItem('auth_token');
 
 // === Utilidades comunes ===
+/*
 const API_BASE = ""; // mismo origen
+*/
+
 function getToken() {
   return localStorage.getItem("auth_token") || "";
 }
