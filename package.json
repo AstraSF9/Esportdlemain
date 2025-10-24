@@ -1,0 +1,20 @@
+{
+  "name": "esportdle-backend",
+  "version": "1.0.0",
+  "description": "Backend para Esportdle estilo Wordle de esports",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --watch servernuevo.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.14.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

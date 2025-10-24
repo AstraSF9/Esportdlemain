@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Esportdle — Ranking global</title>
+
+  <!-- Estilos del sitio -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fuentes (mismas que el resto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body class="page-ranking">
+
+  <!-- ===== NAVBAR (idéntica a las páginas de juego) ===== -->
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">Esportdle</div>
+      <nav>
+        <a class="btn" href="indexnuevo.html" data-i18n="home">Inicio</a>
+        <button id="btnLogin" class="btn" data-i18n="sign_in">Iniciar sesión</button>
+        <button id="langToggle" class="btn">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== CONTENIDO ===== -->
+  <main class="center">
+    <div class="rk-container"><!-- <- NUEVO WRAPPER PARA CENTRADO -->
+
+      <!-- Panel de cabecera + filtros + podio -->
+      <section class="panel rk-header" style="padding:18px 16px; margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;">
+          <h1 id="rkTitle" style="margin:0; font-weight:800; letter-spacing:.2px;">🏆 Ranking global</h1>
+          <a href="indexnuevo.html" class="btn btn-primary" id="rkBack">← Volver</a>
+        </div>
+
+        <div class="rk-toolbar" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn" id="btnSortStreak">Ordenar por racha</button>
+          <button class="btn" id="btnSortDays">Ordenar por días completados</button>
+        </div>
+
+        <!-- Podio -->
+        <section id="rkPodium" class="rk-podium rk-empty"
+          style="display:grid;grid-template-columns:1.1fr 1.3fr 1.1fr;gap:12px;margin:14px 0 18px;">
+          <article class="rk-card rk-t2" id="rkP2">
+            <div class="rk-card__medal">🥈</div><div class="rk-card__place">#2</div>
+            <div class="rk-card__name" id="rkP2Name">—</div>
+            <div class="rk-card__meta">
+              <span class="rk-pill" id="rkP2Streak">Racha: 0</span>
+              <span class="rk-pill" id="rkP2Days">Días completados: 0</span>
+            </div>
+          </article>
+          <article class="rk-card rk-t1" id="rkP1">
+            <div class="rk-card__medal">👑🥇</div><div class="rk-card__place">#1</div>
+            <div class="rk-card__name" id="rkP1Name">—</div>
+            <div class="rk-card__meta">
+              <span class="rk-pill" id="rkP1Streak">Racha: 0</span>
+              <span class="rk-pill" id="rkP1Days">Días completados: 0</span>
+            </div>
+          </article>
+          <article class="rk-card rk-t3" id="rkP3">
+            <div class="rk-card__medal">🥉</div><div class="rk-card__place">#3</div>
+            <div class="rk-card__name" id="rkP3Name">—</div>
+            <div class="rk-card__meta">
+              <span class="rk-pill" id="rkP3Streak">Racha: 0</span>
+              <span class="rk-pill" id="rkP3Days">Días completados: 0</span>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <!-- Panel con tabla y paginación -->
+      <section class="panel rk-table-panel" style="padding:16px;">
+        <div id="rkTableWrap">
+          <table class="rk-table" id="rkTable" aria-live="polite">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th id="thUser">Usuario</th>
+                <th id="thStreak">Racha</th>
+                <th id="thDays">Días completados</th>
+              </tr>
+            </thead>
+            <tbody id="rkTbody">
+              <tr><td colspan="4" class="rk-empty">Cargando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rk-pagination" style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
+          <button class="btn" id="btnPrev">Anterior</button>
+          <button class="btn" id="btnNext">Siguiente</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===== MODALES (copiados de otras páginas para mismo estilo) ===== -->
+  <!-- AUTH -->
+  <div id="authModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAuth">&times;</button>
+      <div class="tabs">
+        <button class="tab active" data-tab="loginTab" data-i18n="login_tab">Ingresar</button>
+        <button class="tab" data-tab="registerTab" data-i18n="register_tab">Registrarse</button>
+      </div>
+
+      <div id="loginTab" class="tabpanel">
+        <form id="formLogin">
+          <label data-i18n="user_or_email">Usuario o Email</label>
+          <input type="text" name="emailOrUser" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required />
+          <button class="btn btn-primary" type="submit" data-i18n="enter">Entrar</button>
+          <p id="loginMsg" class="muted" style="margin-top:6px;"></p>
+        </form>
+      </div>
+
+      <div id="registerTab" class="tabpanel hidden">
+        <form id="formRegister">
+          <label data-i18n="username">Usuario</label>
+          <input type="text" name="username" required />
+          <label>Email</label>
+          <input type="email" name="email" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required />
+          <button class="btn btn-primary" type="submit" data-i18n="create_account">Crear cuenta</button>
+          <p id="registerMsg" class="muted" style="margin-top:6px;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div id="accountModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAccount">&times;</button>
+      <h3 data-i18n="your_account">Tu cuenta</h3>
+      <div class="account-grid">
+        <div class="stat">
+          <div class="muted" data-i18n="today_player">Hoy (Jugador)</div>
+          <b id="acc_today_player">—</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="today_team">Hoy (Equipo)</div>
+          <b id="acc_today_team">—</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="days_done">Días completados</div>
+          <b id="acc_days_total">0</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="streak">Racha actual</div>
+          <b id="acc_streak">0</b>
+        </div>
+      </div>
+      <p id="accountTip" class="muted" style="text-align:center;"></p>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER (solo Twitter / Liquipedia, como pediste) ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="foot_items">
+        <a href="https://x.com/AstralySf" target="_blank">Twitter</a>
+        <a href="https://liquipedia.net/" target="_blank">Liquipedia</a>
+      </div>
+      <div class="copyright">Esportdle.net - 2025</div>
+    </div>
+  </footer>
+
+  <!-- Scripts comunes del sitio -->
+  <script src="auth.js"></script>
+  <script src="accountNotice.js"></script>
+
+  <!-- Lógica del ranking (con guard de login e i18n) -->
+  <script src="ranking.js?v=3"></script>
+</body>
+</html>

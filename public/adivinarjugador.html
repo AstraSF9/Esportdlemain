@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Esportdle - Jugador del día</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <!-- Layout centrado + sin scroll + encabezado de panel en grid -->
+  <style>
+    :root{ --font-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; --font-display:'Bebas Neue',sans-serif; }
+    html,body{height:100%; overflow:hidden; font-family:var(--font-body);}
+    h1,h2,h3,.brand{font-family:var(--font-display); letter-spacing:.4px}
+    .page-root{min-height:100dvh; display:flex; flex-direction:column;}
+    main.center{flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(12px,2vh,24px);}
+    .panel{width:min(92vw,760px); max-height:85dvh; overflow:auto; position:relative;}
+    .panel-header{display:grid; grid-template-columns:max-content 1fr; align-items:center; gap:.75rem; margin-bottom:.5rem; min-height:44px;}
+    .panel-header .back-home{grid-column:1; justify-self:start; display:inline-flex; width:auto; white-space:nowrap; padding:.5rem 1rem;}
+    .panel-header h1{grid-column:1 / -1; justify-self:center; margin:0; text-align:center; pointer-events:none;}
+    .hints{margin:.25rem 0 0 1.2rem}
+    .hints-block.hidden{display:none;}
+  </style>
+
+  <script src="auth.js"></script>
+</head>
+<body class="page-root">
+  <!-- NAV -->
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">Esportdle</div>
+      <nav>
+        <a class="btn" href="indexnuevo.html" data-i18n="home">Inicio</a>
+        <button id="btnLogin" class="btn" data-i18n="sign_in">Iniciar sesión</button>
+        <button id="langToggle" class="btn">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="center">
+    <section class="panel">
+      <div class="panel-header">
+        <a href="indexnuevo.html" class="btn back-home" data-i18n="home">Inicio</a>
+        <h1 data-i18n="today_player">Hoy (Jugador)</h1>
+      </div>
+
+      <button id="btnPlayPlayer" hidden></button>
+
+      <section id="metaPlayer" class="stack">
+        <p id="playerDate" class="muted" style="text-align:center;"></p>
+        <p id="playerHint" style="text-align:center;"></p>
+
+        <!-- Bloque de pistas -->
+        <div id="playerHintsBlock" class="hints-block hidden">
+          <h4 id="playerHintsTitle" style="margin:0 0 .25rem 0;" data-i18n="hints_title">Pistas</h4>
+          <ul id="playerHintsList" class="hints"></ul>
+        </div>
+
+        <!-- Form -->
+        <form id="formGuessPlayer" class="stack" style="margin-top:.5rem;">
+          <input type="text" id="guessPlayer" data-i18n-placeholder="your_guess" placeholder="Tu intento" required />
+          <button type="submit" class="btn" data-i18n="try_btn">Probar</button>
+        </form>
+
+        <!-- Mensajes -->
+        <p id="playerMsg" class="status" style="text-align:center;"></p>
+      </section>
+    </section>
+  </main>
+
+  <!-- MODAL AUTH -->
+  <div id="authModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAuth">&times;</button>
+      <div class="tabs">
+        <button class="tab active" data-tab="loginTab" data-i18n="login_tab">Ingresar</button>
+        <button class="tab" data-tab="registerTab" data-i18n="register_tab">Registrarse</button>
+      </div>
+
+      <div id="loginTab" class="tabpanel">
+        <form id="formLogin">
+          <label data-i18n="user_or_email">Usuario o Email</label>
+          <input type="text" name="emailOrUser" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required />
+          <button type="submit" class="btn full" data-i18n="enter">Entrar</button>
+        </form>
+        <p class="msg" id="loginMsg"></p>
+      </div>
+
+      <div id="registerTab" class="tabpanel hidden">
+        <form id="formRegister">
+          <label>Usuario</label>
+          <input type="text" name="username" required />
+          <label>Email</label>
+          <input type="email" name="email" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required minlength="6" />
+          <button type="submit" class="btn full" data-i18n="create_account">Crear cuenta</button>
+        </form>
+        <p class="msg" id="registerMsg"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MI CUENTA -->
+  <div id="accountModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAccount">&times;</button>
+      <h3 style="margin-top:0" data-i18n="account_title">Tu cuenta</h3>
+      <div id="accountHello" class="muted" style="margin-bottom:8px"></div>
+
+      <div class="account-grid" style="margin-bottom:10px">
+        <div class="stat">
+          <div class="muted" data-i18n="today_player">Hoy (Jugador)</div>
+          <b id="acc_today_player">—</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="today_team">Hoy (Equipo)</div>
+          <b id="acc_today_team">—</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="days_done">Días completados</div>
+          <b id="acc_days_total">0</b>
+        </div>
+        <div class="stat">
+          <div class="muted" data-i18n="streak">Racha actual</div>
+          <b id="acc_streak">0</b>
+        </div>
+      </div>
+
+      <div class="muted" id="acc_note" style="font-size:.9rem"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="foot_items">
+        <a href="https://x.com/AstralySf" target="_blank">Twitter</a>
+        <a href="https://liquipedia.net/" target="_blank">Liquipedia</a>
+      </div>
+      <div class="copyright">Esportdle.net - 2025</div>
+    </div>
+  </footer>
+
+  <script src="js/dailyPlayer.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('metaPlayer')?.classList.remove('hidden');
+      document.getElementById('formGuessPlayer')?.classList.remove('hidden');
+      document.getElementById('btnPlayPlayer')?.click();
+    });
+  </script>
+</body>
+</html>

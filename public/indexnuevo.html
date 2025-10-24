@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Esportdle</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <script src="auth.js"></script>
+  <style>
+    :root{ --font-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; --font-display:'Bebas Neue',sans-serif; }
+    body{font-family:var(--font-body);}
+    h1,h2,h3,.brand{font-family:var(--font-display);}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <div class="brand">Esportdle</div>
+      <nav>
+        <button id="btnLogin" class="btn" data-i18n="sign_in">Iniciar sesión</button>
+        <button id="langToggle" class="btn">EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <header class="hero-logos">
+    <img src="5e69fe67-a71f-439e-b422-067401e9c732.png" alt="Logo">
+  </header>
+  <!-- Modales (auth + cuenta) idénticos a los que usas en juego, con data-i18n -->
+  <div id="authModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAuth">&times;</button>
+      <div class="tabs">
+        <button class="tab active" data-tab="loginTab" data-i18n="login_tab">Ingresar</button>
+        <button class="tab" data-tab="registerTab" data-i18n="register_tab">Registrarse</button>
+      </div>
+      <div id="loginTab" class="tabpanel">
+        <form id="formLogin">
+          <label data-i18n="user_or_email">Usuario o Email</label>
+          <input type="text" name="emailOrUser" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required />
+          <button type="submit" class="btn full" data-i18n="enter">Entrar</button>
+        </form>
+        <p class="msg" id="loginMsg"></p>
+      </div>
+      <div id="registerTab" class="tabpanel hidden">
+        <form id="formRegister">
+          <label>Usuario</label>
+          <input type="text" name="username" required />
+          <label>Email</label>
+          <input type="email" name="email" required />
+          <label data-i18n="password">Contraseña</label>
+          <input type="password" name="password" required minlength="6" />
+          <button type="submit" class="btn full" data-i18n="create_account">Crear cuenta</button>
+        </form>
+        <p class="msg" id="registerMsg"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="accountModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close" id="closeAccount">&times;</button>
+      <h3 data-i18n="account_title">Tu cuenta</h3>
+      <div id="accountHello" class="muted"></div>
+      <div class="account-grid">
+        <div class="stat"><div class="muted" data-i18n="today_player">Hoy (Jugador)</div><b id="acc_today_player">—</b></div>
+        <div class="stat"><div class="muted" data-i18n="today_team">Hoy (Equipo)</div><b id="acc_today_team">—</b></div>
+        <div class="stat"><div class="muted" data-i18n="days_done">Días completados</div><b id="acc_days_total">0</b></div>
+        <div class="stat"><div class="muted" data-i18n="streak">Racha actual</div><b id="acc_streak">0</b></div>
+      </div>
+      <div class="muted" id="acc_note"></div>
+    </div>
+  </div>
+
+  <!-- Selector de modos -->
+  <main class="selector">
+    <div class="card mode-card" onclick="location.href='adivinarjugador.html'">
+      <h2 data-i18n="mode_player_title">Modo Jugador</h2>
+      <p data-i18n="mode_player_sub">Adiviná al jugador del día</p>
+      <button class="btn btn-primary" data-i18n="play_btn">Jugar</button>
+    </div>
+
+    <div class="card mode-card" onclick="location.href='adivinarequipo.html'">
+      <h2 data-i18n="mode_team_title">Modo Equipo</h2>
+      <p data-i18n="mode_team_sub">Adiviná el equipo del día</p>
+      <button class="btn btn-primary" data-i18n="play_btn">Jugar</button>
+    </div>
+
+    <div class="mode-card">
+      <h2 id="rkCardTitle">RANKING GLOBAL</h2>
+      <p id="rkCardDesc">Mirá las mejores rachas y días completados</p>
+      <a href="/ranking.html" class="btn btn-primary">Ver ranking</a>
+    </div>
+
+    
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="foot_items">
+        <a href="https://x.com/AstralySf" target="_blank">Twitter</a>
+        <a href="https://liquipedia.net/" target="_blank">Liquipedia</a>
+      </div>
+      <div class="copyright">Esportdle.net - 2025</div>
+    </div>
+  </footer>
+</body>
+</html>

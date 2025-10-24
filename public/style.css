@@ -1,0 +1,1147 @@
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)), url('goat.png');
+    background-size:cover; 
+    background-position: center; 
+    background-attachment:fixed;
+}
+
+header{
+    display: flex;
+    justify-content:center;
+    align-items: center;    
+        
+}
+
+.img2{
+    margin: 0px 40px;
+    width: 30%;
+    height: 20%;
+}
+
+.selector{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.game_button {
+    cursor: pointer;
+    padding: 5px 0px;
+    margin: 10px auto;
+    border-radius: 5px;
+    position: relative; /* Necesario para que los textos se posicionen encima */
+    overflow: hidden;
+    width: 90%;
+    max-width: 600px;
+
+}
+
+/* Quitamos la transición rota */
+.game_button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Imagen de fondo */
+.img_button {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Títulos y descripciones encima de la imagen */
+.button_title, .button_description {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
+    z-index: 2;
+}
+
+.button_title {
+    top: 20%;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.button_description {
+    top: 45%;
+    font-size: 16px;
+}
+
+/* Fondo semitransparente si querés más contraste para el texto (opcional) */
+
+/* Oscurece un poco la imagen (Inhabilitado por el momento para hacer testeos) */
+
+
+/**
+.game_button::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0); 
+    z-index: 1;
+}
+
+**/
+
+@media (max-width:992px){
+    body {
+        background-attachment: scroll;
+    }
+
+    header {
+        flex-direction: column;
+    }
+
+    .img2 {
+        width: 50%;
+        margin: 20px 0;
+    }
+
+    .menu {
+        font-size: 16px; 
+    }
+
+    .game_button {
+        padding: 10px 15px; 
+    }
+
+    .button_title {
+        font-size: 18px; 
+    }
+
+    .button_description {
+        font-size: 14px;
+    }
+
+    footer {
+        padding: 15px;
+    }
+}
+
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100% ;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.game_button{
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 10px auto;
+}
+.img_button{
+    width: auto;
+}
+
+.button_title{
+    font-weight: bold;
+    font-size: 20px;
+}
+.button_description{
+    font-size: 15px;
+}
+
+/* Navbar */
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#111;color:#fff}
+.navbar .brand{font-weight:bold}
+
+/* Botones */
+.btn{border:0;padding:8px 14px;border-radius:8px;background:#2d6cdf;color:#fff;cursor:pointer}
+.btn.full{width:100%}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:1000}
+.modal.hidden{display:none}
+.modal-content{position:relative;width:95%;max-width:420px;background:#fff;border-radius:12px;padding:16px}
+.close{position:absolute;top:8px;right:10px;border:0;background:transparent;font-size:24px;cursor:pointer}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{flex:1;border:1px solid #ddd;background:#f6f6f6;padding:8px;border-radius:8px;cursor:pointer}
+.tab.active{background:#e8f0ff;border-color:#2d6cdf}
+.tabpanel.hidden{display:none}
+
+/* Forms */
+form{display:flex;flex-direction:column;gap:8px}
+label{font-size:14px}
+input{padding:8px;border:1px solid #ccc;border-radius:8px}
+.msg{font-size:14px;margin-top:6px}
+
+
+/* === Esportdle · parche visual “drop-in” (no rompe nada) === */
+/* Usando tus clases actuales: .game_button, .button_title, .button_description */
+
+:root{
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --ring: rgba(96,165,250,.55);
+}
+
+/* Centrado y respiración del selector de modos */
+.selector{
+  align-items:center;
+  gap:18px;
+  padding:16px;
+}
+
+/* CARD clickeable (tu “botón” grande) */
+.game_button{
+  position: relative;           /* para overlays */
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  background: rgba(24,32,48,.35);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s, filter .18s;
+  width: clamp(280px, 92vw, 640px);  /* responsivo sin perder tu max-width */
+  padding: 0;                          /* que la imagen ocupe todo */
+}
+
+/* Oscurecido sutil para que el texto se lea en cualquier fondo */
+.game_button::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg,
+              rgba(0,0,0,.35) 0%,
+              rgba(0,0,0,.25) 40%,
+              rgba(0,0,0,.55) 100%);
+  z-index:1; pointer-events:none;
+}
+
+.game_button:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 14px 36px rgba(0,0,0,.45);
+}
+
+/* Imagen de fondo: llena el ancho y anima suave */
+.img_button{
+  width:100%;
+  height:auto;
+  display:block;
+  transform: scale(1.01);
+  filter: saturate(1.05) brightness(.9);
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), filter .35s;
+}
+.game_button:hover .img_button{
+  transform: scale(1.04);
+  filter: saturate(1.1) brightness(.95);
+}
+
+/* Títulos/descripcion encima de la imagen (mejora legibilidad) */
+.button_title,
+.button_description{
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  color:#fff;
+  text-align:center;
+  text-shadow: 0 2px 12px rgba(0,0,0,.6);
+  z-index:2;   /* por encima del ::after */
+  letter-spacing:.2px;
+}
+.button_title{
+  top:24%;
+  font-weight:800;
+  font-size: clamp(18px, 3.2vw, 28px);
+}
+.button_description{
+  top:52%;
+  font-size: clamp(13px, 2.2vw, 18px);
+  color: var(--text);
+  opacity:.95;
+}
+
+/* Footer integrado con el fondo */
+footer{
+  background: rgba(8,12,20,.75);
+  color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+footer .foot_items{
+  display:flex; justify-content:center; gap:14px; margin-bottom:8px;
+}
+footer .foot_items a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px; text-decoration:none;
+  color:#d1d5db; background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  transition: transform .12s, background .2s, color .2s, border-color .2s;
+}
+footer .foot_items a:hover{
+  transform: translateY(-1px);
+  background: rgba(96,165,250,.15);
+  color:#fff; border-color: rgba(255,255,255,.18);
+}
+
+/* Accesibilidad: foco visible en botones de la UI */
+.btn:focus{ outline:none; box-shadow:0 0 0 4px var(--ring); }
+
+/* Responsive extra (complementa tu @media actual) */
+@media (max-width: 640px){
+  .selector{ gap:14px; padding:12px; }
+  .button_title{ top:22%; }
+  .button_description{ top:54%; }
+}
+
+/* Respeta preferencias del usuario */
+@media (prefers-reduced-motion: reduce){
+  .game_button, .img_button { transition: none !important; }
+}
+
+/* === Bridge para indexnuevo.html (usa .mode-card del HTML nuevo) === */
+
+:root{
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --ring: rgba(96,165,250,.55);
+}
+
+/* Centrado y espacio del selector de modos */
+.selector{
+  display:flex;               /* por si el cascade anterior lo pisa */
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+  padding:24px;
+}
+
+/* Tarjeta moderna para Modo Jugador/Equipo */
+.mode-card{
+  background: rgba(24,32,48,.55);
+  color:#e5e7eb;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  width: min(480px, 92vw);
+  text-align: center;
+  padding: 28px 24px 22px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
+}
+.mode-card h2{ margin:0 0 6px 0; font-weight:700; letter-spacing:.2px; }
+.mode-card p{ margin:0 0 16px 0; color:#9ca3af; font-size:.95rem; }
+.mode-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 14px 36px rgba(0,0,0,.45);
+}
+
+/* Botón principal “Jugar” */
+.btn-primary{
+  color:#fff;
+  border:0;
+  border-radius:999px;
+  font-weight:700;
+  padding:10px 18px;
+  background: linear-gradient(180deg, #e11d2a 0%, #b3121c 100%);
+  box-shadow: 0 8px 18px rgba(225,29,42,.35);
+  transition: transform .12s ease, box-shadow .15s ease, background .2s;
+}
+.mode-card .btn-primary:hover{ transform: translateY(-1px); }
+.mode-card .btn-primary:focus{ outline:none; box-shadow:0 0 0 4px var(--ring); }
+
+/* Footer integrado */
+.footer{
+  margin-top:auto;
+  text-align:center;
+  padding:16px;
+  background: rgba(8,12,20,.75);
+  color: var(--muted);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.footer .foot_items{
+  display:flex; justify-content:center; gap:14px; margin-bottom:8px;
+}
+.footer .foot_items a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px; text-decoration:none;
+  color:#d1d5db; background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  transition: transform .12s, background .2s, color .2s, border-color .2s;
+}
+.footer .foot_items a:hover{
+  transform: translateY(-1px);
+  background: rgba(96,165,250,.15);
+  color:#fff; border-color: rgba(255,255,255,.18);
+}
+
+/* Ocultar secciones de juego por defecto y mostrar solo la activa */
+.game-section{ display:none; }
+.game-section.active{ display:block; background: rgba(12,18,28,.55); border-radius:16px; margin:16px auto; max-width:720px; }
+
+/* Por si tenés reglas viejas que recortan imágenes */
+.img_button{ width:100% !important; height:auto; display:block; }
+
+/* Responsive */
+@media (max-width:640px){
+  .selector{ gap:16px; padding:16px; }
+  .mode-card{ width:100%; padding:22px 18px 18px; }
+}
+
+/* === Layout común: container + alineación navbar/footer/cards === */
+:root { --container: 1120px; }
+
+.container{
+  width: min(var(--container), 96vw);
+  margin-inline: auto;
+}
+
+html, body{ overflow-x: hidden; } /* por si alguna imagen se sale 1-2px */
+
+/* Alinea el contenedor de tarjetas con navbar/footer */
+.selector{
+  width: min(var(--container), 96vw);
+  margin-inline: auto;
+  gap: 24px;
+}
+
+/* Navbar alineada y legible sobre el fondo */
+.navbar{
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10,15,24,.85);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.navbar .container{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding-block: 8px; padding-inline: 8px;
+}
+
+/* Footer alineado al mismo ancho */
+.footer{
+  background: rgba(8,12,20,.75);
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.footer .container{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding-block: 12px; padding-inline: 8px;
+  flex-wrap: wrap;
+}
+.footer .copyright{ opacity: .9; }
+
+@media (max-width: 640px){
+  .footer .container{ justify-content: center; text-align: center; }
+  .footer .copyright{ width: 100%; }
+}
+
+/* === Fix 1: la navbar no debe heredar el flex de header{} global === */
+header.navbar{
+  display: block !important;            /* neutraliza el display:flex del header global */
+  justify-content: initial !important;  /* por si queda heredado */
+  align-items: initial !important;
+  padding: 0;
+}
+header.navbar .container{
+  width: min(var(--container, 1120px), 96vw);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 8px;
+  padding-inline: 8px;
+}
+
+/* === Fix 2: el vidrio del footer alinea con las cards (no banda full-width) === */
+.footer{
+  background: transparent !important;   /* quitamos la banda ancha */
+  border: 0;
+  padding: 18px 0;                      /* respiración vertical */
+}
+.footer .container{
+  width: min(var(--container, 1120px), 96vw);
+  margin-inline: auto;
+
+  /* “vidrio” y borde dentro del ancho del contenido */
+  background: rgba(8,12,20,.75);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  flex-wrap: wrap;
+}
+
+/* Alineación de items del footer */
+.footer .foot_items{ display:flex; gap:14px; }
+.footer .copyright{ opacity:.9; }
+
+@media (max-width:640px){
+  .footer .container{ justify-content:center; text-align:center; }
+  .footer .copyright{ width:100%; }
+}
+
+/* Opcional: ocultar el img de “Logo 1” si era un placeholder */
+.hero-logos img[alt="Logo 1"]{ display:none; }
+
+/* ===== Sticky footer full-width ===== */
+
+/* Asegura layout de página completa y que el footer se pegue abajo */
+html, body { height: 100%; }
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenido crece; el footer baja */
+.footer{
+  margin-top: auto;                 /* coloca el footer al fondo */
+  width: 100%;
+  background: rgba(8,12,20,.78);    /* banda de vidrio a todo lo ancho */
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Solo centrado y spacing interno; SIN fondo ni bordes aquí */
+.footer .container{
+  width: min(var(--container, 1120px), 96vw);
+  margin-inline: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding-block: 12px; padding-inline: 12px;
+  flex-wrap: wrap;
+
+  /* anula el “vidrio” previo si lo tenías */
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Opcional: si querés un poco más de aire vertical */
+@media (min-width: 641px){
+  .footer .container{ padding-block: 16px; }
+}
+
+/* Por si alguna cosa causa desbordes laterales */
+html, body { overflow-x: hidden; }
+
+/* === 1) LOGO: mantener proporción y centrar === */
+.img2{
+  /* evita distorsión: NO fijar height en % */
+  width: clamp(280px, 30vw, 720px);
+  height: auto !important;
+  display: block;
+  margin: 0 auto;               /* centrado */
+  max-width: 100%;
+}
+
+/* Si quedó algún placeholder "Logo 1", lo ocultamos */
+img[alt="Logo 1"]{ display:none; }
+
+/* === 2) BOTONES Y NAVBAR: asegurar estilos sobre la cascada === */
+
+/* Botón "Iniciar sesión" en la navbar */
+.navbar .btn{
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 8px 14px;
+  border: 0;
+  color: #e5e7eb;
+  background: rgba(255,255,255,.08);
+  transition: transform .12s ease, box-shadow .15s ease, background .2s;
+}
+.navbar .btn:hover{ transform: translateY(-1px); }
+.navbar .btn:focus{ outline:none; box-shadow:0 0 0 4px rgba(96,165,250,.55); }
+
+/* Botón rojo "Jugar" en las tarjetas */
+.mode-card .btn.btn-primary{
+  color:#fff;
+  border:0;
+  border-radius:999px;
+  font-weight:700;
+  padding:10px 18px;
+  background: linear-gradient(180deg, #e11d2a 0%, #b3121c 100%);
+  box-shadow: 0 8px 18px rgba(225,29,42,.35);
+  transition: transform .12s ease, box-shadow .15s ease, background .2s;
+}
+.mode-card .btn.btn-primary:hover{ transform: translateY(-1px); }
+.mode-card .btn.btn-primary:focus{ outline:none; box-shadow:0 0 0 4px rgba(96,165,250,.55); }
+
+/* Asegurar el estilo glass de las tarjetas (por si algo las pisa) */
+.mode-card{
+  background: rgba(24,32,48,.55);
+  color:#e5e7eb;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* === 3) FOOTER full-width sticky (sin mover nada más) === */
+html, body { height: 100%; min-height: 100vh; overflow-x: hidden; }
+body{ display:flex; flex-direction:column; }
+
+.footer{
+  margin-top: auto;
+  width: 100%;
+  background: rgba(8,12,20,.78);
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* El contenido del footer, alineado al mismo “riel” que las tarjetas */
+.footer .container{
+  width: min(var(--container, 1120px), 96vw);
+  margin-inline: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding-block: 12px; padding-inline: 12px;
+  flex-wrap: wrap;
+  background: transparent; border:0; border-radius:0; box-shadow:none;
+}
+
+@media (max-width: 640px){
+  .footer .container{ justify-content:center; text-align:center; }
+  .footer .copyright{ width:100%; }
+}
+
+/* ==== Footer con el mismo look azul del header ==== */
+/* Full-width, pegado abajo, blur y borde como la navbar */
+.footer{
+  margin-top: auto;
+  width: 100%;
+
+  /* mismo tono y acabado que .navbar */
+  background:
+    linear-gradient(180deg, rgba(10,15,24,.94) 0%, rgba(10,15,24,.86) 100%);
+  border-top: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  /* leve sombra superior para separar del contenido */
+  box-shadow: 0 -8px 24px rgba(0,0,0,.25);
+}
+
+/* contenido alineado al mismo “riel” que las cards y la navbar */
+.footer .container{
+  width: min(var(--container, 1120px), 96vw);
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 12px;
+  padding-inline: 12px;
+
+  /* sin fondos internos (el vidrio lo hace .footer) */
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: #cbd5e1;                 /* texto claro como en la nav */
+}
+
+/* links/píldoras del footer con estilo coherente */
+.footer .foot_items{ display:flex; gap:14px; }
+.footer .foot_items a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  color:#d1d5db;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  transition: transform .12s, background .2s, color .2s, border-color .2s;
+}
+.footer .foot_items a:hover{
+  transform: translateY(-1px);
+  background: rgba(96,165,250,.15);     /* azul suave como focus de la nav */
+  color:#fff;
+  border-color: rgba(255,255,255,.18);
+}
+
+/* copyright alineado y con opacidad similar a la nav */
+.footer .copyright{ opacity:.9; }
+
+@media (max-width:640px){
+  .footer .container{ justify-content:center; text-align:center; flex-wrap:wrap; }
+  .footer .copyright{ width:100%; margin-top:6px; }
+}
+
+/* ==== Footer igual al header (override fuerte) ==== */
+
+/* layout página completa */
+html, body { height: 100%; min-height: 100vh; }
+body{ display:flex; flex-direction:column; }
+
+/* banda full-width abajo */
+footer.footer{
+  margin-top: auto !important;
+  width: 100% !important;
+
+  /* mismo “azul” que la navbar + blur */
+  background: #111 !important; /* fallback por si tu nav usa #111 */
+  background: linear-gradient(180deg, rgba(10,15,24,.94) 0%, rgba(10,15,24,.86) 100%) !important;
+  border-top: 1px solid rgba(255,255,255,.08) !important;
+  color: #cbd5e1 !important;
+
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 -8px 24px rgba(0,0,0,.25) !important;
+  padding: 0 !important;
+}
+
+/* contenido centrado al mismo riel que las cards/nav */
+footer.footer .container{
+  width: min(var(--container, 1120px), 96vw) !important;
+  margin-inline: auto !important;
+
+  display:flex !important; align-items:center !important; justify-content:space-between !important;
+  gap:12px !important; padding:12px !important; flex-wrap:wrap !important;
+
+  /* nos aseguramos de que nada interno meta otro vidrio */
+  background: transparent !important;
+  border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+}
+
+/* píldoras/enlaces del footer coherentes con header */
+footer.footer .foot_items{ display:flex !important; gap:14px !important; }
+footer.footer .foot_items a{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px; text-decoration:none;
+  color:#d1d5db; background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  transition:transform .12s, background .2s, color .2s, border-color .2s;
+}
+footer.footer .foot_items a:hover{
+  transform:translateY(-1px);
+  background:rgba(96,165,250,.15);
+  color:#fff; border-color:rgba(255,255,255,.18);
+}
+
+/* por si algún style previo forcea desplazamientos */
+html, body { overflow-x: hidden; }
+
+/* === Utilidades comunes para páginas internas (jugador/equipo) === */
+.page-main{
+  min-height: calc(100vh - 120px); /* espacio entre nav y footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+}
+
+.panel{
+  background: rgba(24,32,48,.55);
+  color: #e5e7eb;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  width: min(640px, 96vw);
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.panel h1{
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.stack{
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* centra dentro del panel */
+  gap: 10px;
+}
+
+.panel input[type="text"]{
+  width: min(420px, 90%);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.panel .btn{
+  margin-top: 6px;
+}
+
+/* mensajes de estado */
+.status{ font-weight: 600; }
+.status.ok{ color: #22c55e; }        /* opcional si marcás correcto con esta clase */
+.status.err{ color: #ef4444; }       /* opcional si marcás incorrecto con esta clase */
+
+.muted{ color: #9ca3af; }
+
+/* oculto reutilizable */
+.hidden{ display: none; }
+
+/* Botón de volver al inicio dentro del panel */
+.panel { position: relative; }
+.back-home{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px 14px;          /* usa tu clase .btn pero afinamos el tamaño */
+  opacity: 0.95;
+}
+.back-home:hover{ opacity: 1; }
+
+
+/* === Auth modal con look Esportdle (vidrio + pills) === */
+#authModal .modal-content,
+#accountModal .modal-content{
+  background: rgba(24,32,48,.55);
+  color:#e5e7eb;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding:20px;
+}
+
+#authModal .tabs{
+  display:flex; gap:10px; margin-bottom:14px;
+}
+#authModal .tab{
+  flex:1;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color:#d1d5db;
+  font-weight:700;
+  border-radius:999px;
+  padding:10px 12px;
+}
+#authModal .tab.active{
+  background: rgba(96,165,250,.20);
+  border-color: rgba(255,255,255,.2);
+  color:#fff;
+}
+#authModal label{ color:#cbd5e1; }
+#authModal input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(8,12,20,.35);
+  color:#e5e7eb;
+}
+#authModal .btn.full{
+  border-radius:999px;
+  font-weight:700;
+  padding:10px 18px;
+  background: linear-gradient(180deg, #2d6cdf 0%, #1f4fb1 100%);
+  box-shadow: 0 8px 18px rgba(45,108,223,.35);
+}
+
+/* ===== Modal Mi Cuenta ===== */
+#accountModal .account-grid{
+  display:grid; gap:10px;
+  grid-template-columns: 1fr 1fr;
+}
+#accountModal .stat{
+  background: rgba(8,12,20,.45);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+}
+#accountModal .stat b{ font-size:1.1rem; }
+@media (max-width:560px){
+  #accountModal .account-grid{ grid-template-columns: 1fr; }
+}
+
+/* Tamaño del logo del index */
+.hero-logos{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 6px 0;
+}
+.hero-logos img{
+  height: 340px;        /* <-- ajusta este número a tu gusto (28, 32, 40, etc.) */
+  width: auto;         /* mantiene proporción */
+  max-width: 80vw;     /* por si abres en pantallas muy pequeñas */
+}
+
+/* ===== Admin Modal (mismo look que el login) ===== */
+#adminModal.modal{
+  /* ya hereda el overlay oscuro de .modal */
+  z-index: 1100; /* un poco por encima por seguridad */
+}
+
+#adminModal .modal-box{
+  position: relative;
+  width: 95%;
+  max-width: 720px;                /* más ancho que el login para los selects */
+  background: rgba(24,32,48,.55);  /* vidrio */
+  color:#e5e7eb;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding:20px;
+}
+
+#adminModal .modal-header{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin-bottom:10px;
+}
+#adminModal .modal-header h3{
+  margin:0; font-weight:800; letter-spacing:.2px;
+}
+
+#adminModal .btn{
+  border:0; padding:8px 12px; border-radius:10px;
+  background:#2d6cdf; color:#fff; cursor:pointer;
+  box-shadow: 0 6px 14px rgba(45,108,223,.28);
+}
+
+#adminModal select{
+  appearance: none;
+  background: rgba(8,12,20,.35);
+  color:#e5e7eb;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  padding:8px 10px;
+  margin-top:6px;
+}
+
+#adminModal section + section{ margin-top:14px; }
+#adminModal h4{ margin:0 0 6px 0; font-weight:700; }
+
+/* Botón cerrar (la X) */
+#adminModal #closeAdmin{
+  background: rgba(255,255,255,.08);
+  color:#e5e7eb;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  transition: transform .12s ease, background .18s ease;
+}
+#adminModal #closeAdmin:hover{ transform: translateY(-1px); }
+
+/* Mensaje de estado de guardado */
+#adminModal #adminMsg{
+  color:#cbd5e1; margin-left:8px;
+}
+
+/* === Armonizar botón de la card de Ranking con el resto === */
+.mode-card a.btn,
+.mode-card .btn,
+a.btn.btn-primary {
+  text-decoration: none !important;
+  font-family: var(--font-body, 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif) !important;
+  font-weight: 700 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Overlay de búsqueda (mangadle) ===== */
+.search-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(4px);
+  display: none;
+}
+.search-panel {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: 30px; width: min(760px, 92vw);
+  background: #12161f; color: #e5e7eb;
+  border-radius: 14px; box-shadow: 0 16px 50px rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.1);
+  overflow: hidden;
+}
+.search-head {
+  display: flex; align-items: center;
+  padding: 10px 12px; background: #0c1118; border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.search-input {
+  flex: 1; font-size: 18px; padding: 10px 12px; border: 0; outline: 0;
+  background: transparent; color: #fff;
+}
+.search-close {
+  margin-left: 8px; border:0; background:#1f2937; color:#fff; border-radius:8px; padding:6px 10px; cursor:pointer;
+}
+.search-list { max-height: 66vh; overflow: auto; background:#12161f; }
+.search-item {
+  display: flex; gap: 12px; align-items: center; padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.06); cursor: pointer;
+}
+.search-item:last-child { border-bottom: 0; }
+.search-avatar {
+  width: 56px; height: 56px; border-radius: 10px; object-fit: cover;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+  display: grid; place-items: center; font-weight: 800; font-size: 18px;
+}
+.search-name { font-weight: 700; font-size: 16px; }
+.search-item:hover, .search-item.active { background: rgba(59,130,246,.22); }
+
+
+/* === Tipografías y tokens globales (igual que el home) === */
+:root{
+  --font-title: 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* === Aplicar la misma estética del home cuando estamos en ranking === */
+.page-ranking, .page-ranking * {
+  font-family: var(--font-body);
+}
+
+/* Título grande "Ranking global" con la misma onda que los módulos del home */
+.page-ranking h1#rkTitle{
+  font-family: var(--font-title);
+  font-size: 44px;                 /* similar a los headers de las cards */
+  line-height: 1;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  font-weight: 400;                 /* Bebas Neue luce mejor en 400 */
+  color: #e8eaed;
+  margin: 4px 0 8px 0 !important;
+}
+
+/* Botones del ranking iguales a los del home */
+.page-ranking .btn{
+  font-weight: 700;
+  border-radius: 12px;
+}
+.page-ranking .btn.btn-primary{
+  background: linear-gradient(180deg, #ff3b3b 0%, #b31212 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(179,18,18,.35);
+}
+
+/* Paneles vidrio como en las tarjetas del home */
+.page-ranking .panel{
+  background: rgba(20, 27, 39, .55);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.40);
+  backdrop-filter: blur(12px);
+}
+
+/* Podio: nombre con la misma fuente de títulos (opcional), pills con Inter */
+.page-ranking .rk-card__name{
+  font-family: var(--font-title);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.page-ranking .rk-pill{
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+/* Tabla: encabezados en Bebas (look del home para headings), cuerpo en Inter */
+.page-ranking .rk-table th{
+  font-family: var(--font-title);
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  font-weight: 400;
+  font-size: 20px;
+}
+.page-ranking .rk-table td{
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+/* “Volver” arriba a la derecha, mismo estilo que botones principales */
+.page-ranking #rkBack{
+  font-weight: 800;
+  border-radius: 14px;
+}
+
+/* Footer links mantienen la tipografía del home */
+.page-ranking .footer a{
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+/* ===== Centrados para la página de ranking ===== */
+
+/* Contenedor centrado y con ancho máx similar al home */
+.page-ranking .rk-container{
+  width: min(1100px, 95vw);
+  margin: 28px auto;              /* centra todo horizontalmente */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Paneles con el mismo ancho y centrados */
+.page-ranking .panel{
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Header del ranking: título y filtros centrados, “Volver” fijo a la derecha */
+.page-ranking .rk-header{
+  position: relative;
+  padding: 18px 16px;
+  text-align: center;
+}
+.page-ranking #rkTitle{ text-align: center; }
+.page-ranking #rkBack{
+  position: absolute;
+  top: 14px;
+  right: 14px;    /* queda a la derecha sin romper el centrado del título */
+}
+
+/* Toolbar de orden centrada */
+.page-ranking .rk-toolbar,
+.page-ranking .rk-header .row{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Podio centrado con tarjetas alineadas */
+.page-ranking #rkPodium{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  align-items: stretch;
+  margin: 14px 0 6px;
+}
+
+/* Tabla: contenedor y paginación centrados */
+.page-ranking .rk-table-panel{ padding: 16px; }
+.page-ranking #rkTableWrap{ width: 100%; margin: 0 auto; }
+.page-ranking .rk-pagination{ justify-content: center !important; }
+
+/* En móviles: 1 columna en el podio para que siga centrado */
+@media (max-width: 720px){
+  .page-ranking #rkPodium{
+    grid-template-columns: 1fr;
+  }
+}
