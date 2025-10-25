@@ -131,18 +131,19 @@ async function ensureTodayDiario() {
   const [{ c: cj }] = await q(`SELECT COUNT(*) AS c FROM jugadores`);
   const [{ c: ce }] = await q(`SELECT COUNT(*) AS c FROM equipos`);
   if (!cj || !ce) return;
+const offJ = seededOffset(cj, `JUGADOR:${fecha}`);
+const offE = seededOffset(ce, `EQUIPO:${fecha}`);
 
-  const offJ = seededOffset(cj, `JUGADOR:${fecha}`);
-  const offE = seededOffset(ce, `EQUIPO:${fecha}`);
+const offsetJ = Math.max(0, Math.min(cj - 1, Number(offJ) | 0));
+const offsetE = Math.max(0, Math.min(ce - 1, Number(offE) | 0));
 
-  const [rowJ] = await q(
-    `SELECT id_jugador FROM jugadores ORDER BY id_jugador LIMIT ?,1`,
-    [offJ]
-  );
-  const [rowE] = await q(
-    `SELECT id_equipos FROM equipos ORDER BY id_equipos LIMIT ?,1`,
-    [offE]
-  );
+const [rowJ] = await q(
+  `SELECT id_jugador FROM jugadores ORDER BY id_jugador LIMIT ${offsetJ}, 1`
+);
+const [rowE] = await q(
+  `SELECT id_equipos FROM equipos ORDER BY id_equipos LIMIT ${offsetE}, 1`
+);
+
   if (!rowJ || !rowE) return;
 
   await q(
